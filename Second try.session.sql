@@ -1,4 +1,3 @@
-INSERT INTO people (firstName, lastName, email)
-VALUES 
-    ('John','Smith','JSmith@gmail.com'),
-    ('Matthew', 'Adam', 'matt123@gmail.com');
+UPDATE people
+SET password = hash("cheese1234")
+WHERE email = "matt123@gmail.com"
