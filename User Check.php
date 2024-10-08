@@ -7,7 +7,7 @@ $db = "test";
 $connection  = new mysqli($host,$user,$pass,$db);
 
 if ($connection->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $connection->connect_error);
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 echo 'invalid password, please try again';
             }
         } else{
-            echo 'user not found, please try again';
+            echo 'user not found, please try again, or make a new account';
         }
         $stmt->close();
     }

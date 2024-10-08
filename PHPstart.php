@@ -57,13 +57,14 @@
         $connection = new mysqli("localhost","root","","test");
         $result = $connection->query("SELECT * FROM people");
         echo "<table border='1'>";
-        echo "<tr><th>First Name</th><th>Last Name</th><th>Email</th></tr>";
+        echo "<tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Password<th></tr>";
 
         while($row = $result->fetch_assoc()){
             echo "<tr>";
             echo "<td>" . $row['firstName'] . "</td>";
             echo "<td>" . $row['lastName'] . "</td>";
             echo "<td>" . $row['email'] . "</td>";
+            echo "<td>" . $row['password'] . "</td>";
             echo "</tr>";
         }
         echo "</table>";

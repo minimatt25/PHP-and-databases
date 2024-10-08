@@ -4,6 +4,10 @@ body{
     font-family: "Gowun Batang", serif;
 }
 
+a{
+    padding-left: 20px;
+}
+
 .mainSection{
     top: 0;
     right: 0;
@@ -40,9 +44,17 @@ input:valid{
     border-color: green;
 }
 
-.table{
+input:invalid{
+    border-color: red;
+}
+
+.loginTable{
     display: flex;
     justify-content: space-evenly;
+}
+
+.signUpTable{
+    display: table;
 }
 
 .cell{
@@ -50,10 +62,15 @@ input:valid{
     padding: 20px;
 }
 
-.create{
+.loginCreate{
     display: flex;
     padding: 20px;
     justify-content: center;
+}
+
+.signUpCreate{
+    align-self: center;
+    padding-left: 100px;
 }
 
 button{
@@ -61,6 +78,10 @@ button{
     background-color: rgb(70, 145, 70);
     color: white;
     font-size: 25px;
+}
+
+button:hover{
+    cursor: pointer;
 }
 
 #message{

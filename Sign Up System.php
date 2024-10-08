@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Login System.css">
-    <title>Sign In</title>
+    <title>Sign Up</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,11 +14,11 @@
 </head>
 <body>
     <div class="mainSection">
-        <h1 class="signUp centerText">Login</h1>
+        <h1 class="signUp centerText">Sign Up</h1>
         <fieldset>
             <legend>Your Information</legend>
 
-            <div class="loginTable">
+            <div class="signUpTable">
                 <div class="cell">
                     <label for="firstName">First Name</label>
                     <br>
@@ -31,52 +31,48 @@
                 </div>
             </div>
 
-            <div class="loginTable">
+            <div class="signUpTable">
                 <div class="cell">
                     <label for="email">Email</label>
                     <br>
                     <input type="email" id="email" name="email">
                 </div>
+                <div class="cell">
+                    <label for="Cemail">Confirm Email</label>
+                    <br>
+                    <input type="email" id="Cemail" name="email">
+                </div>
+                <div class="cell signUpCreate">
+                    <button id="createAccount" disabled>Create Account</button>
+                </div>
+            </div>
 
+            <script>
+                $(document).ready(function () {
+                    $('#password, #confirm').on('keyup',function (){
+                        if ($('#password').val() == $('#confirm').val()){
+                            $('#message').html('Matching').css('color', 'green');
+                        } else{
+                            $('#message').html('Not Matching').css('color', 'red');
+                        }
+                    });
+                });
+            </script>
+
+            <div class="signUpTable"></div>
                 <div class="cell">
                     <label for="password">Password</label>
                     <br>
                     <input type="password" id="password" name="password">
                 </div>
+                <div class="cell">
+                    <label for="confirm">Confirm Password</label>
+                    <br>
+                    <input type="password" id="confirm" name="confirm">
+                </div>
+                <div class="cell" id="message"></div>
             </div>
-            
-            <br>
-            <div class="loginCreate">
-                <button id="createAccount" disabled>Login to account</button>
-            </div>
-            <br>
-            <div id="invalidMessage"></div>
         </fieldset>
-        
-        <div class="accounts">
-            <br>
-            <a href="Sign Up System.php"><p>Don't have an account, sign up here</p></a>
-            <br><br>
-            <h2>Working accounts</h2>
-            <?php
-                $connection = new mysqli("localhost","root","","test");
-                $result = $connection->query("SELECT * FROM people");
-                echo "<table border='1'>";
-                echo "<tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Password<th></tr>";
-
-                while($row = $result->fetch_assoc()){
-                    echo "<tr>";
-                    echo "<td>" . $row['firstName'] . "</td>";
-                    echo "<td>" . $row['lastName'] . "</td>";
-                    echo "<td>" . $row['email'] . "</td>";
-                    echo "<td>" . $row['password'] . "</td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-                $connection->close();
-                echo "<br> table inserted from connected database"
-            ?>
-        </div>
     </div>
 
     <script>
@@ -87,47 +83,50 @@
                 const firstName = $('#firstName').val().trim();
                 const lastName = $('#lastName').val().trim();
                 const email = $('#email').val().trim();
+                const Cemail = $('#Cemail').val().trim()
                 const password = $('#password').val().trim();
+                const confirm = $('#confirm').val().trim();
 
-                if ( firstName!='' && lastName!='' && email!=''){
+                if ( firstName!='' && lastName!='' && email!='' && Cemail == email && password.length>=8 && confirm == password)
+                {
                     createAccountButton.prop('disabled', false);
                 } else{
                     createAccountButton.prop('disabled', true);
                 }
-
             }
 
-            $('#firstName, #lastName, #email, #password').on('input', validation);
-            
+            $('#firstName, #lastName, #email, #Cemail, #password, #confirm').on('input', validation);
+
             $('#createAccount').on('click', function(event){
                 event.preventDefault();
 
                 const firstName = $('#firstName').val().trim();
                 const lastName = $('#lastName').val().trim();
                 const email = $('#email').val().trim();
+                const Cemail = $('#Cemail').val().trim()
                 const password = $('#password').val().trim();
+                const confirm = $('#confirm').val().trim();
 
-                //communicating with php file to check if user valid
                 $.ajax({
-                    url: "User Check.php",
+                    url:'User Sign Up.php',
                     type: "post",
                     data: {
                         firstName:firstName,
                         lastName:lastName,
                         email:email,
-                        password:password
+                        Cemail:Cemail,
+                        password:password,
+                        confirm:confirm
                     },
                     success: function(response){
-                        if(response === "success"){
+                        if(response == "success"){
                             window.location.href = "SignUpWorked.html";
                         } else{
                             $("#invalidMessage").html(response);
                         }
                     }
-                });
-
+                })
             });
-
         });
     </script>
 </body>
